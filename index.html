@@ -110,7 +110,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .vitrine { position: relative; min-width: 0; overflow: hidden; padding-block: 24px;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .vitrine-trilho { display: flex; gap: 18px; width: max-content; animation: desliza 55s linear infinite; will-change: transform; }
-.vitrine:hover .vitrine-trilho, .parado .vitrine-trilho, .letreiro.parado .letreiro-trilho { animation-play-state: paused; }
+.letreiro.parado .letreiro-trilho { animation-play-state: paused; }
 .passe { flex: 0 0 min(340px, 78vw); background: linear-gradient(160deg, var(--grafite-claro), var(--grafite)); border: 1px solid var(--fio); border-radius: 22px; overflow: hidden; box-shadow: 0 40px 80px -45px rgba(0,0,0,.85); }
 .vitrine-legenda { margin-top: 4px; font-size: .74rem; color: var(--texto-suave); text-align: right; }
 .passe-cab { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 22px; border-bottom: 1px dashed var(--fio); }
@@ -369,7 +369,7 @@ html.lenis, html.lenis body { height: auto; }
             <div class="passe-pe"><span class="ok">Verificado 25/11 · 06:47</span><span class="cod">CP·004</span></div>
           </article>
         </div>
-        <p class="vitrine-legenda">Ofertas reais · novembro de 2026 · passe o mouse para pausar</p>
+        <p class="vitrine-legenda">Ofertas reais · novembro de 2026</p>
       </div>
     </div>
   </section>
@@ -557,6 +557,13 @@ html.lenis, html.lenis body { height: auto; }
     [].slice.call(trilhoHero.children).forEach(function (c) {
       var copia = c.cloneNode(true); copia.setAttribute("aria-hidden", "true"); trilhoHero.appendChild(copia);
     });
+    // Nunca para: com o mouse em cima só desacelera (parar dava a impressão de "travou" depois de rolar).
+    var vit = document.querySelector(".vitrine");
+    var veloc = function (v) { (trilhoHero.getAnimations ? trilhoHero.getAnimations() : []).forEach(function (a) { a.updatePlaybackRate ? a.updatePlaybackRate(v) : (a.playbackRate = v); }); };
+    if (vit) {
+      vit.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") veloc(0.3); });
+      vit.addEventListener("pointerleave", function () { veloc(1); });
+    }
   }
 
   // 2) Carrossel de exemplos: setas rolam um cartão por vez.
@@ -721,7 +728,7 @@ html.lenis, html.lenis body { height: auto; }
     var ioL = new IntersectionObserver(function (es) {
       es.forEach(function (en) { en.target.classList.toggle("parado", !en.isIntersecting); });
     });
-    document.querySelectorAll(".vitrine, .letreiro").forEach(function (el) { ioL.observe(el); });
+    document.querySelectorAll(".letreiro").forEach(function (el) { ioL.observe(el); });  // os cartões do topo nunca pausam
   }
 
   // 5) Campanha do Google Ads (utm_campaign/gclid) vai para o /start do bot, para medir conversão.
