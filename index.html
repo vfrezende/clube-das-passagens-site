@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clube das Passagens | Passagens aéreas baratas no Telegram</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Passagens aéreas baratas saindo do Brasil, conferidas antes de publicar: voos nacionais e internacionais, resgates em milhas e compra de milhas. Canal grátis no Telegram e Premium por R$ 17,50/mês no Pix.">
+<meta property="og:title" content="Clube das Passagens">
+<meta property="og:description" content="As passagens baratas que valem a pena, avisadas no Telegram com o link direto. Preço conferido antes de publicar.">
+<meta name="theme-color" content="#2E0A14">
+<link rel="icon" href="marca/logo-icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Paleta do dono (25/11): bordô + dourado + creme/branco, com grafite premium no texto e em algumas faixas.
+   Primeira tela completa sem rolar (logo, mensagem, descrição, preço, CTA). Movimento: carrossel de cartões,
+   letreiro de cidades esquerda → direita, cortina ao rolar e profundidade na rota do hero. */
+:root {
+  --bordo: #4A1220;
+  --bordo-escuro: #2E0A14;
+  --bordo-vivo: #6A1C2E;
+  --ouro: #C8A96A;
+  --ouro-claro: #ECD7A2;
+  --ouro-escuro: #8E7140;
+  --creme: #F7F1E6;
+  --branco: #FFFDF8;
+  --grafite: #2C2B30;
+  --grafite-escuro: #1E1D21;
+  --grafite-claro: #3A3940;
+  --texto-suave: #C9BFB3;      /* sobre bordô e grafite */
+  --texto-suave-claro: #5E5A62;/* sobre creme */
+  --fio: rgba(236,215,162,.16);
+  --fio-claro: #E2D8C6;
+  --confere: #9CCBA6;
+  --f-titulo: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --f-texto: "Manrope", "Segoe UI", Roboto, Arial, sans-serif;
+  --medida: 1180px;
+  --curva: cubic-bezier(.2, .7, .1, 1);
+  --topo-h: 64px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--grafite-escuro); color: var(--creme); font: 400 1rem/1.6 var(--f-texto); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ouro); outline-offset: 3px; border-radius: 4px; }
+.faixa { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.miolo { max-width: var(--medida); margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-titulo); font-weight: 500; letter-spacing: -0.015em; line-height: 1.03; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(2rem, 5vw, 3.6rem); }
+h3 { font-size: 1.35rem; line-height: 1.15; }
+em { font-style: italic; color: var(--ouro); }
+p { margin: 0; }
+.selo { font: 700 .7rem/1 var(--f-texto); letter-spacing: .24em; text-transform: uppercase; color: var(--ouro); }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+
+/* topo */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bordo-escuro); }
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 8; background: rgba(46,10,20,.86); backdrop-filter: blur(12px); border-bottom: 1px solid var(--fio); }
+.topo .miolo { height: var(--topo-h); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.marca { display: flex; align-items: center; text-decoration: none; }
+.marca img { height: 46px; width: auto; display: block; }
+.topo-link { font: 700 .74rem/1 var(--f-texto); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; color: var(--ouro-claro); white-space: nowrap; border: 1px solid rgba(236,215,162,.4); padding: 10px 14px; border-radius: 999px; }
+
+/* botões */
+.botoes { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { max-width: 100%; position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 26px; border-radius: 999px; font: 700 .98rem/1.1 var(--f-texto); letter-spacing: .01em; text-decoration: none; transition: transform .35s var(--curva), background .3s, color .3s, border-color .3s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-ouro { background: linear-gradient(135deg, var(--ouro-claro), var(--ouro) 55%, #A98A4F); color: var(--bordo-escuro); box-shadow: 0 16px 36px -18px rgba(236,215,162,.8); }
+.btn-ouro::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.5) 50%, transparent 70%); transform: translateX(-120%); transition: transform 1s var(--curva); }
+.btn-ouro:hover::after { transform: translateX(120%); }
+.btn-fio { border: 1px solid rgba(236,215,162,.45); color: var(--creme); }
+.btn-fio:hover { border-color: var(--ouro-claro); }
+.btn-bordo { background: var(--bordo); color: var(--creme); }
+.btn svg { width: 19px; height: 19px; flex: none; }
+
+/* HERO: tudo o que importa cabe na primeira tela */
+.hero { position: relative; isolation: isolate; overflow: hidden; background:
+  radial-gradient(60% 70% at 85% 10%, rgba(236,215,162,.14), transparent 60%),
+  radial-gradient(70% 80% at 0% 100%, rgba(106,28,46,.75), transparent 65%),
+  linear-gradient(160deg, var(--bordo) 0%, var(--bordo-escuro) 70%); }
+.hero-rota { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.hero .miolo { min-height: calc(100svh - var(--topo-h) - env(safe-area-inset-top, 0px)); display: grid; gap: 40px; padding-block: clamp(20px, 4vh, 48px); grid-template-columns: minmax(0, 1fr); align-items: center; }
+@media (min-width: 980px) { .hero .miolo { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); } }
+.vitrine, .vitrine-trilho, .passe { max-width: 100%; }
+.marca img { max-width: 52vw; }
+.hero-texto { display: grid; gap: clamp(14px, 2.4vh, 24px); min-width: 0; align-content: center; }
+.hero h1 { font-size: clamp(2.05rem, 6.2vw, 5rem); overflow-wrap: anywhere; }
+.hero-sub { font-size: clamp(.98rem, 1.6vw, 1.12rem); color: var(--texto-suave); max-width: 34em; }
+.hero-sub strong { color: var(--creme); font-weight: 600; }
+.precos { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 420px) { .preco-chip { padding: 8px 12px; } .preco-chip b { font-size: 1.25rem; } }
+.preco-chip { display: flex; align-items: baseline; gap: 8px; padding: 10px 16px; border-radius: 14px; border: 1px solid var(--fio); background: rgba(30,29,33,.35); }
+.preco-chip b { font: 500 1.45rem/1 var(--f-titulo); color: var(--creme); }
+.preco-chip span { font: 700 .66rem/1.2 var(--f-texto); letter-spacing: .16em; text-transform: uppercase; color: var(--texto-suave); }
+.preco-chip.ouro { border-color: rgba(236,215,162,.55); background: linear-gradient(135deg, rgba(236,215,162,.18), rgba(30,29,33,.3)); }
+.preco-chip.ouro b { color: var(--ouro-claro); }
+.garantias { display: flex; flex-wrap: wrap; gap: 6px 20px; list-style: none; padding: 0; margin: 0; font-size: .84rem; color: var(--texto-suave); }
+.garantias li { display: flex; align-items: center; gap: 8px; }
+.garantias li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--ouro); }
+@media (max-height: 700px) and (max-width: 979px) { .garantias { display: none; } }
+.entra { animation: entra 1.1s var(--curva) both; }
+.entra-2 { animation-delay: .1s; } .entra-3 { animation-delay: .2s; } .entra-4 { animation-delay: .3s; }
+@keyframes entra { from { transform: translateY(16px); opacity: .25; } to { transform: none; opacity: 1; } }
+
+/* carrossel de cartões de embarque */
+.vitrine { position: relative; min-width: 0; perspective: 1400px; }
+.vitrine-trilho { position: relative; display: grid; }
+.passe { grid-area: 1 / 1; background: linear-gradient(160deg, var(--grafite-claro), var(--grafite)); border: 1px solid var(--fio); border-radius: 22px; overflow: hidden; box-shadow: 0 50px 90px -45px rgba(0,0,0,.85);
+  transition: opacity .9s var(--curva), transform 1.1s var(--curva), filter .9s; opacity: 0; transform: translateX(14%) rotateY(-14deg) scale(.94); filter: blur(4px); pointer-events: none; }
+.passe.ativo { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+.passe.saindo { opacity: 0; transform: translateX(-14%) rotateY(14deg) scale(.94); filter: blur(4px); }
+.passe-cab { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 22px; border-bottom: 1px dashed var(--fio); }
+.passe-cab .tipo { font: 700 .68rem/1 var(--f-texto); letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); }
+.passe-cab .nota { font: 600 .74rem/1 var(--f-texto); color: var(--texto-suave); }
+.passe-rota { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 10px; padding: 24px 22px 8px; }
+.iata { font: 500 clamp(2.3rem, 5vw, 3.2rem)/.95 var(--f-titulo); }
+.iata small { display: block; font: 500 .8rem/1.3 var(--f-texto); color: var(--texto-suave); margin-top: 8px; }
+.direita { text-align: right; }
+.passe-aviao { width: 56px; color: var(--ouro); padding-bottom: 30px; }
+.passe-corpo { display: grid; gap: 10px; padding: 12px 22px 20px; }
+.passe-preco { font: 500 2.3rem/1 var(--f-titulo); color: var(--ouro-claro); }
+.passe-preco small { font: 500 .82rem/1 var(--f-texto); color: var(--texto-suave); }
+.passe-corpo p { font-size: .9rem; color: var(--texto-suave); }
+.passe-pe { display: flex; justify-content: space-between; gap: 10px; padding: 13px 22px; border-top: 1px solid var(--fio); font-size: .78rem; }
+.passe-pe .ok { color: var(--confere); font-weight: 600; }
+.passe-pe .cod { letter-spacing: .3em; color: var(--texto-suave); }
+.vitrine-controle { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; }
+.pontos { display: flex; gap: 8px; }
+.ponto { width: 34px; height: 3px; border-radius: 3px; background: rgba(236,215,162,.2); border: 0; padding: 0; cursor: pointer; overflow: hidden; position: relative; }
+.ponto i { position: absolute; inset: 0; background: var(--ouro-claro); transform: scaleX(0); transform-origin: left; }
+.ponto.ativo i { animation: progresso var(--dur, 5s) linear forwards; }
+@keyframes progresso { to { transform: scaleX(1); } }
+.vitrine-controle small { font-size: .74rem; color: var(--texto-suave); }
+
+/* letreiro de cidades: esquerda → direita, lento */
+.letreiro { background: var(--grafite); border-top: 1px solid var(--fio); border-bottom: 1px solid var(--fio); overflow: hidden; padding-block: 20px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.letreiro-trilho { display: flex; gap: 48px; width: max-content; animation: desliza 90s linear infinite; will-change: transform; }
+.letreiro span { font: italic 400 clamp(1.3rem, 3vw, 2rem)/1 var(--f-titulo); color: var(--creme); white-space: nowrap; display: flex; align-items: center; gap: 48px; }
+.letreiro span::after { content: "✦"; font-style: normal; font-size: .7em; color: var(--ouro); }
+@keyframes desliza { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+/* seções */
+.secao .miolo { padding-block: clamp(72px, 11vw, 128px); display: grid; gap: clamp(32px, 5vw, 52px); }
+.secao-cab { display: grid; gap: 14px; max-width: 44em; }
+.secao-cab p { font-size: 1.05rem; color: var(--texto-suave); }
+.clara { background: var(--creme); color: var(--grafite); }
+.clara .selo { color: var(--bordo); }
+.clara em { color: var(--bordo); }
+.clara p, .clara .secao-cab p { color: var(--texto-suave-claro); }
+.grafite { background: var(--grafite); }
+.vinho { background: radial-gradient(90% 80% at 50% 0%, var(--bordo-vivo), var(--bordo) 45%, var(--bordo-escuro)); }
+
+.passos { display: grid; gap: 0; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 0; }
+@media (min-width: 860px) { .passos { grid-template-columns: repeat(3, 1fr); gap: 44px; } }
+.passo { display: grid; gap: 12px; align-content: start; padding: 26px 0; border-top: 1px solid var(--fio-claro); }
+@media (min-width: 860px) { .passo { border-top: 2px solid var(--bordo); } }
+.passo-n { font: italic 400 3.4rem/1 var(--f-titulo); color: var(--ouro-escuro); }
+.passo h3 { color: var(--grafite); }
+
+.carrossel-cab { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+.setas { display: flex; gap: 10px; }
+.seta { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(236,215,162,.45); background: transparent; color: var(--ouro-claro); font-size: 1.2rem; cursor: pointer; transition: background .3s, color .3s; }
+.seta:hover { background: var(--ouro); color: var(--bordo-escuro); }
+.bilhetes { display: grid; grid-auto-flow: column; grid-auto-columns: min(86%, 380px); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 8px; scrollbar-width: none; }
+.bilhetes::-webkit-scrollbar { display: none; }
+.bilhete { scroll-snap-align: start; background: linear-gradient(160deg, var(--bordo), var(--bordo-escuro)); border: 1px solid var(--fio); border-radius: 20px; display: grid; grid-template-rows: auto auto 1fr auto; overflow: hidden; min-width: 0; transition: transform .6s var(--curva), border-color .6s; }
+.bilhete:hover { transform: translateY(-6px); border-color: rgba(236,215,162,.5); }
+.bilhete .iata { font-size: 2.2rem; }
+
+.planos { display: grid; gap: 20px; grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 860px) { .planos { grid-template-columns: .9fr 1.1fr; } }
+.plano { display: grid; gap: 22px; align-content: start; padding: 34px 28px; border-radius: 24px; border: 1px solid var(--fio); background: rgba(30,29,33,.4); }
+.plano-premium { position: relative; border: 1px solid var(--ouro); background: linear-gradient(165deg, rgba(236,215,162,.16), rgba(30,29,33,.55) 45%); box-shadow: 0 40px 90px -50px rgba(236,215,162,.55); }
+.plano-premium::before { content: "Recomendado"; position: absolute; top: -13px; left: 28px; background: var(--ouro); color: var(--bordo-escuro); font: 700 .66rem/1 var(--f-texto); letter-spacing: .2em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; }
+.plano-topo { display: grid; gap: 10px; }
+.plano-preco { font: 500 clamp(2.6rem, 6vw, 3.6rem)/1 var(--f-titulo); }
+.plano-preco small { font: 500 .9rem/1 var(--f-texto); color: var(--texto-suave); }
+.itens { list-style: none; padding: 0; margin: 0; display: grid; gap: 11px; }
+.itens li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: .97rem; }
+.itens li::before { content: "✓"; color: var(--ouro-claro); font-weight: 700; }
+.itens li.nao::before { content: "–"; color: var(--texto-suave); }
+.itens li.nao { color: var(--texto-suave); }
+.plano .nota { font-size: .84rem; color: var(--texto-suave); }
+
+.regras { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--fio-claro); }
+@media (min-width: 860px) { .regras { grid-template-columns: 1fr 1fr; column-gap: 56px; } }
+.regra { display: grid; gap: 8px; padding: 24px 0; border-bottom: 1px solid var(--fio-claro); }
+.regra h3 { color: var(--grafite); }
+
+.faq { display: grid; border-top: 2px solid var(--bordo); max-width: 58em; }
+.faq details { border-bottom: 1px solid var(--fio); }
+.faq summary { cursor: pointer; list-style: none; padding: 22px 44px 22px 0; position: relative; font: 500 1.25rem/1.25 var(--f-titulo); color: var(--creme); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font: 300 1.7rem/1 var(--f-texto); color: var(--ouro); transition: transform .4s var(--curva); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 22px; max-width: 48em; color: var(--texto-suave); }
+
+.final { background: linear-gradient(135deg, var(--ouro-claro), var(--ouro) 50%, #A4864C); color: var(--bordo-escuro); }
+.final .miolo { padding-block: clamp(72px, 11vw, 128px); display: grid; gap: 24px; justify-items: center; text-align: center; }
+.final .selo, .final em { color: var(--bordo); }
+.final p { color: #4A3A22; max-width: 34em; font-size: 1.06rem; }
+.final img { width: 96px; height: auto; }
+
+.rodape { background: var(--grafite-escuro); }
+.rodape .miolo { padding-block: 30px calc(30px + 80px); display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; font-size: .84rem; color: var(--texto-suave); }
+@media (min-width: 860px) { .rodape .miolo { padding-block: 30px; } }
+.rodape img { height: 40px; width: auto; }
+.rodape nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.rodape a { text-decoration: none; }
+.rodape a:hover { color: var(--ouro); }
+
+.fixa { position: fixed; left: 0; right: 0; bottom: 0; z-index: 7; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(46,10,20,.94); backdrop-filter: blur(10px); border-top: 1px solid var(--fio); transform: translateY(110%); transition: transform .5s var(--curva); }
+.fixa.visivel { transform: none; }
+.fixa .btn { width: 100%; }
+@media (min-width: 860px) { .fixa { display: none; } }
+
+.js .revela { opacity: 0; transform: translateY(56px) scale(.985); clip-path: inset(0 0 26% 0); transition: opacity 1.3s var(--curva), transform 1.6s var(--curva), clip-path 1.6s var(--curva); }
+.js .revela.visivel { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+.js .revela-2 { transition-delay: .15s; } .js .revela-3 { transition-delay: .3s; }
+[data-prof] { will-change: transform; }
+
+
+/* ===== movimento premium ===== */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* lâminas: cada seção fica presa e a próxima desliza por cima */
+.hero { position: sticky; top: calc(var(--topo-h) + env(safe-area-inset-top, 0px)); z-index: 0; }
+.letreiro { position: relative; z-index: 1; }
+.lamina { position: sticky; top: calc(var(--topo-h) + env(safe-area-inset-top, 0px)); z-index: 1; border-radius: 34px 34px 0 0;
+  box-shadow: 0 -34px 70px -24px rgba(0,0,0,.6); overflow: clip; }
+.rodape { position: relative; z-index: 2; }
+.hero > .miolo, .lamina > .miolo { transform-origin: 50% 0; will-change: transform, filter; }
+
+/* títulos palavra a palavra */
+.js .palavra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.js .palavra > span { display: inline-block; transform: translateY(108%) rotate(4deg); transform-origin: 0 100%;
+  transition: transform 1.1s var(--curva); transition-delay: calc(var(--i, 0) * 55ms); }
+.js .visivel .palavra > span, .js .palavra.ja > span { transform: none; }
+
+/* botões: pressão, onda e ímã */
+.btn:active { transform: scale(.965); }
+.onda { position: absolute; border-radius: 50%; pointer-events: none; background: rgba(255,255,255,.42); transform: scale(0);
+  animation: onda .75s var(--curva) forwards; }
+.btn-fio .onda, .btn-bordo .onda { background: rgba(236,215,162,.35); }
+@keyframes onda { to { transform: scale(4.2); opacity: 0; } }
+.btn.ima { transition: transform .25s var(--curva), background .3s, color .3s, border-color .3s; }
+
+/* cartões com inclinação 3D */
+.inclina { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+  transition: transform .5s var(--curva), border-color .6s; }
+.inclina:hover { --ty: -6px; }
+.bilhete:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px); }
+.brilho-mouse { position: relative; }
+.brilho-mouse::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(236,215,162,.16), transparent 60%); transition: opacity .4s; }
+.brilho-mouse:hover::before { opacity: 1; }
+
+/* arrastar para o lado */
+.bilhetes { cursor: grab; }
+.bilhetes.arrastando { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.bilhetes.arrastando .bilhete { pointer-events: none; }
+
+/* links do rodapé e do topo com sublinhado que desliza */
+.rodape nav a, .topo-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .5s var(--curva), color .3s; }
+.rodape nav a:hover { background-size: 100% 1px; }
+
+
+/* quem pede menos movimento: tudo continua, só mais curto e suave */
+.suave .revela, .suave .passe, .suave .palavra > span { transition-duration: .6s !important; }
+.suave .letreiro-trilho { animation-duration: 140s; }
+</style>
+</head>
+<body>
+
+<header class="topo faixa">
+  <div class="miolo">
+    <a class="marca" href="#inicio" aria-label="Clube das Passagens, início"><img src="marca/logo-horizontal.svg" alt="Clube das Passagens" width="134" height="46"></a>
+    <a class="topo-link" data-tg="canal" href="https://t.me/clubedaspassagens">Entrar grátis</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero faixa" aria-labelledby="titulo">
+    <svg class="hero-rota" data-prof="0.25" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="rastro" x1="0" x2="1"><stop offset="0" stop-color="#C8A96A" stop-opacity="0"/><stop offset=".5" stop-color="#C8A96A" stop-opacity=".55"/><stop offset="1" stop-color="#E9D29C" stop-opacity=".9"/></linearGradient></defs>
+      <path id="voo" d="M-40 640 C 320 560, 520 220, 860 250 S 1300 120, 1500 60" fill="none" stroke="url(#rastro)" stroke-width="1.4" stroke-dasharray="3 9"/>
+      <g class="hero-aviao">
+        <path d="M12 1.5c.9 0 1.4.9 1.4 1.9V9l8.1 4.6v2l-8.1-2.4v5.2l2.6 1.9v1.6L12 20.8l-4 1.1v-1.6l2.6-1.9v-5.2l-8.1 2.4v-2L10.6 9V3.4c0-1 .5-1.9 1.4-1.9Z" transform="rotate(90) translate(-12 -12) scale(1.3)" fill="#E9D29C"/>
+        <animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#voo"/></animateMotion>
+      </g>
+    </svg>
+    <div class="miolo">
+      <div class="hero-texto">
+        <span class="selo entra">Passagens aéreas saindo do Brasil</span>
+        <h1 id="titulo" class="entra entra-2">Passagens baratas <em>de verdade</em>, antes de todo mundo.</h1>
+        <p class="hero-sub entra entra-3">Vigiamos blogs, companhias e buscadores <strong>24 h por dia</strong> e avisamos no Telegram só as passagens que valem a pena, em dinheiro ou em milhas. <strong>Preço conferido, link direto.</strong></p>
+        <div class="precos entra entra-3" aria-label="Preços">
+          <div class="preco-chip"><span>Canal grátis</span><b class="num">R$ 0</b></div>
+          <div class="preco-chip ouro"><span>Premium</span><b class="num">R$ 17,50</b><span>/mês no Pix</span></div>
+        </div>
+        <div class="botoes entra entra-4">
+          <a class="btn btn-ouro" data-tg="canal" href="https://t.me/clubedaspassagens">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1-1 .2-1.5L20.6 2.7c.9-.3 1.6.2 1.3 1.6Z"/></svg>
+            Entrar no canal grátis
+          </a>
+          <a class="btn btn-fio" data-tg="bot" href="https://t.me/ClubeDasPassagensBot?start=premium">Assinar o Premium</a>
+        </div>
+        <ul class="garantias entra entra-4">
+          <li>Sem cadastro, direto no Telegram</li>
+          <li>Sem fidelidade</li>
+          <li>Não vendemos passagens</li>
+        </ul>
+      </div>
+
+      <div class="vitrine" aria-roledescription="carrossel" aria-label="Ofertas reais encontradas">
+        <div class="vitrine-trilho">
+          <article class="passe ativo" aria-label="Oferta 1 de 4">
+            <div class="passe-cab"><span class="tipo">Passagem · imperdível</span><span class="nota">Nota 81/100</span></div>
+            <div class="passe-rota">
+              <div class="iata">GRU<small>São Paulo</small></div>
+              <svg class="passe-aviao" viewBox="0 0 56 20" aria-hidden="true"><path d="M0 10h40" stroke="currentColor" stroke-dasharray="2 4"/><path transform="translate(42 1) rotate(90 9 9) scale(.75)" d="M12 1.5c.9 0 1.4.9 1.4 1.9V9l8.1 4.6v2l-8.1-2.4v5.2l2.6 1.9v1.6L12 20.8l-4 1.1v-1.6l2.6-1.9v-5.2l-8.1 2.4v-2L10.6 9V3.4c0-1 .5-1.9 1.4-1.9Z" fill="currentColor"/></svg>
+              <div class="iata direita">PUJ<small>Punta Cana</small></div>
+            </div>
+            <div class="passe-corpo">
+              <div class="passe-preco num">R$ 1.935 <small>ida e volta</small></div>
+              <p>12 a 18 de março de 2027 · voo direto · 49% abaixo do normal da rota (~R$ 3.800).</p>
+            </div>
+            <div class="passe-pe"><span class="ok">Verificado 24/11 · 11:18</span><span class="cod">CP·001</span></div>
+          </article>
+          <article class="passe" aria-label="Oferta 2 de 4">
+            <div class="passe-cab"><span class="tipo">Passagem · muito boa</span><span class="nota">Nota 77/100</span></div>
+            <div class="passe-rota">
+              <div class="iata">GRU<small>São Paulo</small></div>
+              <svg class="passe-aviao" viewBox="0 0 56 20" aria-hidden="true"><path d="M0 10h40" stroke="currentColor" stroke-dasharray="2 4"/><path transform="translate(42 1) rotate(90 9 9) scale(.75)" d="M12 1.5c.9 0 1.4.9 1.4 1.9V9l8.1 4.6v2l-8.1-2.4v5.2l2.6 1.9v1.6L12 20.8l-4 1.1v-1.6l2.6-1.9v-5.2l-8.1 2.4v-2L10.6 9V3.4c0-1 .5-1.9 1.4-1.9Z" fill="currentColor"/></svg>
+              <div class="iata direita">REC<small>Recife</small></div>
+            </div>
+            <div class="passe-corpo">
+              <div class="passe-preco num">R$ 480 <small>ida e volta</small></div>
+              <p>Datas em fevereiro e junho de 2027 · 52% abaixo do normal da rota (~R$ 1.000).</p>
+            </div>
+            <div class="passe-pe"><span class="ok">Vista em 25/11</span><span class="cod">CP·002</span></div>
+          </article>
+          <article class="passe" aria-label="Oferta 3 de 4">
+            <div class="passe-cab"><span class="tipo">Milhas · resgate</span><span class="nota">Nacional</span></div>
+            <div class="passe-rota">
+              <div class="iata">GIG<small>Rio de Janeiro</small></div>
+              <svg class="passe-aviao" viewBox="0 0 56 20" aria-hidden="true"><path d="M0 10h40" stroke="currentColor" stroke-dasharray="2 4"/><path transform="translate(42 1) rotate(90 9 9) scale(.75)" d="M12 1.5c.9 0 1.4.9 1.4 1.9V9l8.1 4.6v2l-8.1-2.4v5.2l2.6 1.9v1.6L12 20.8l-4 1.1v-1.6l2.6-1.9v-5.2l-8.1 2.4v-2L10.6 9V3.4c0-1 .5-1.9 1.4-1.9Z" fill="currentColor"/></svg>
+              <div class="iata direita">SSA<small>Salvador</small></div>
+            </div>
+            <div class="passe-corpo">
+              <div class="passe-preco num">4,2 mil <small>pontos Azul o trecho</small></div>
+              <p>Comprando os pontos na promoção ativa, a viagem sai por cerca de R$ 183 ida e volta, com o passo a passo para emitir.</p>
+            </div>
+            <div class="passe-pe"><span class="ok">Vista em 25/11</span><span class="cod">CP·003</span></div>
+          </article>
+          <article class="passe" aria-label="Oferta 4 de 4">
+            <div class="passe-cab"><span class="tipo">Passagem · muito boa</span><span class="nota">Nota 66/100</span></div>
+            <div class="passe-rota">
+              <div class="iata">GRU<small>São Paulo</small></div>
+              <svg class="passe-aviao" viewBox="0 0 56 20" aria-hidden="true"><path d="M0 10h40" stroke="currentColor" stroke-dasharray="2 4"/><path transform="translate(42 1) rotate(90 9 9) scale(.75)" d="M12 1.5c.9 0 1.4.9 1.4 1.9V9l8.1 4.6v2l-8.1-2.4v5.2l2.6 1.9v1.6L12 20.8l-4 1.1v-1.6l2.6-1.9v-5.2l-8.1 2.4v-2L10.6 9V3.4c0-1 .5-1.9 1.4-1.9Z" fill="currentColor"/></svg>
+              <div class="iata direita">AUA<small>Aruba</small></div>
+            </div>
+            <div class="passe-corpo">
+              <div class="passe-preco num">R$ 2.316 <small>ida e volta</small></div>
+              <p>28 de março a 3 de abril de 2027 · 1 escala · 39% abaixo do normal da rota (~R$ 3.800).</p>
+            </div>
+            <div class="passe-pe"><span class="ok">Verificado 25/11 · 06:47</span><span class="cod">CP·004</span></div>
+          </article>
+        </div>
+        <div class="vitrine-controle">
+          <div class="pontos" role="tablist" aria-label="Escolher oferta">
+            <button class="ponto ativo" role="tab" aria-label="Oferta 1"><i></i></button>
+            <button class="ponto" role="tab" aria-label="Oferta 2"><i></i></button>
+            <button class="ponto" role="tab" aria-label="Oferta 3"><i></i></button>
+            <button class="ponto" role="tab" aria-label="Oferta 4"><i></i></button>
+          </div>
+          <small>Ofertas reais · novembro de 2026</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="letreiro" aria-hidden="true">
+    <div class="letreiro-trilho">
+      <span>Lisboa</span><span>Punta Cana</span><span>Recife</span><span>Buenos Aires</span><span>Aruba</span><span>Paris</span><span>Fernando de Noronha</span><span>Orlando</span><span>Santiago</span><span>Cancún</span><span>Jericoacoara</span><span>Madri</span>
+      <span>Lisboa</span><span>Punta Cana</span><span>Recife</span><span>Buenos Aires</span><span>Aruba</span><span>Paris</span><span>Fernando de Noronha</span><span>Orlando</span><span>Santiago</span><span>Cancún</span><span>Jericoacoara</span><span>Madri</span>
+    </div>
+  </div>
+
+  <section class="secao clara faixa lamina" aria-labelledby="como">
+    <div class="miolo">
+      <div class="secao-cab revela">
+        <span class="selo">Como funciona</span>
+        <h2 id="como">Do achado ao seu celular <em>em minutos</em></h2>
+      </div>
+      <ol class="passos">
+        <li class="passo revela">
+          <span class="passo-n">i.</span>
+          <h3>Monitoramos tudo, o tempo todo</h3>
+          <p>Blogs, companhias e buscadores, a cada poucos minutos, para mais de 170 destinos.</p>
+        </li>
+        <li class="passo revela revela-2">
+          <span class="passo-n">ii.</span>
+          <h3>Comparamos com o preço normal</h3>
+          <p>Cada oferta ganha nota de 0 a 100 contra o preço normal da rota. Só publicamos o que está abaixo.</p>
+        </li>
+        <li class="passo revela revela-3">
+          <span class="passo-n">iii.</span>
+          <h3>Você recebe no Telegram</h3>
+          <p>Rota, datas, quanto economiza e o link para comprar. Nas milhas, o passo a passo para emitir.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao grafite faixa lamina" aria-labelledby="exemplos">
+    <div class="miolo">
+      <div class="carrossel-cab revela">
+        <div class="secao-cab">
+          <span class="selo">O que chega para os membros</span>
+          <h2 id="exemplos">Dinheiro, milhas e <em>compra de milhas</em></h2>
+        </div>
+        <div class="setas">
+          <button class="seta" data-dir="-1" aria-label="Exemplo anterior">←</button>
+          <button class="seta" data-dir="1" aria-label="Próximo exemplo">→</button>
+        </div>
+      </div>
+      <div class="bilhetes revela revela-2" tabindex="0" aria-label="Exemplos de alertas">
+        <article class="bilhete">
+          <div class="passe-cab"><span class="tipo">Passagem</span><span class="nota">Nota 81/100</span></div>
+          <div class="passe-rota"><div class="iata">GRU<small>São Paulo</small></div><span class="passe-aviao" aria-hidden="true">⇄</span><div class="iata direita">PUJ<small>Punta Cana</small></div></div>
+          <div class="passe-corpo"><div class="passe-preco num">R$ 1.935 <small>ida e volta</small></div><p>12 a 18 de março de 2027, voo direto. 49% abaixo do normal da rota.</p></div>
+          <div class="passe-pe"><span class="ok">Preço verificado</span><span class="cod">LINK DIRETO</span></div>
+        </article>
+        <article class="bilhete">
+          <div class="passe-cab"><span class="tipo">Resgate em milhas</span><span class="nota">Nacional</span></div>
+          <div class="passe-rota"><div class="iata">GIG<small>Rio de Janeiro</small></div><span class="passe-aviao" aria-hidden="true">→</span><div class="iata direita">SSA<small>Salvador e mais</small></div></div>
+          <div class="passe-corpo"><div class="passe-preco num">4,2 mil <small>pontos o trecho</small></div><p>Azul Fidelidade. Dizemos onde comprar os pontos mais baratos e o passo a passo da emissão.</p></div>
+          <div class="passe-pe"><span class="ok">Como emitir incluso</span><span class="cod">MILHAS</span></div>
+        </article>
+        <article class="bilhete">
+          <div class="passe-cab"><span class="tipo">Compra de milhas</span><span class="nota">Milheiro</span></div>
+          <div class="passe-rota"><div class="iata">LATAM<small>LATAM Pass</small></div><span class="passe-aviao" aria-hidden="true"></span><div class="iata direita num">23,55<small>R$ por mil</small></div></div>
+          <div class="passe-corpo"><div class="passe-preco">Abaixo da meta <small>de R$ 24</small></div><p>Transferência de pontos Livelo com bônus. Avisamos só quando o milheiro compensa.</p></div>
+          <div class="passe-pe"><span class="ok">Com validade</span><span class="cod">PROMO</span></div>
+        </article>
+        <article class="bilhete">
+          <div class="passe-cab"><span class="tipo">Passagem nacional</span><span class="nota">Nota 77/100</span></div>
+          <div class="passe-rota"><div class="iata">GRU<small>São Paulo</small></div><span class="passe-aviao" aria-hidden="true">⇄</span><div class="iata direita">REC<small>Recife</small></div></div>
+          <div class="passe-corpo"><div class="passe-preco num">R$ 480 <small>ida e volta</small></div><p>Fevereiro e junho de 2027. 52% abaixo do normal da rota.</p></div>
+          <div class="passe-pe"><span class="ok">Vista em blog parceiro</span><span class="cod">CRÉDITO</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao vinho faixa lamina" id="planos" aria-labelledby="titulo-planos">
+    <div class="miolo">
+      <div class="secao-cab revela">
+        <span class="selo">Planos</span>
+        <h2 id="titulo-planos">Comece grátis. <em>Assine quando fizer sentido.</em></h2>
+        <p>Grátis para conhecer. Premium para não perder nenhuma, inclusive as imperdíveis.</p>
+      </div>
+      <div class="planos">
+        <div class="plano revela">
+          <div class="plano-topo"><span class="selo">Canal grátis</span><span class="plano-preco num">R$ 0</span></div>
+          <ul class="itens">
+            <li>Até 5 passagens boas e muito boas por dia</li>
+            <li>Resumo diário do que saiu no Premium</li>
+            <li class="nao">Ofertas chegam 90 minutos depois</li>
+            <li class="nao">Imperdíveis e erros tarifários só no Premium</li>
+            <li class="nao">Sem resgates nem compra de milhas</li>
+          </ul>
+          <a class="btn btn-fio" data-tg="canal" href="https://t.me/clubedaspassagens">Entrar no canal grátis</a>
+        </div>
+        <div class="plano plano-premium revela revela-2">
+          <div class="plano-topo"><span class="selo">Premium</span><span class="plano-preco num">R$ 17,50 <small>a cada 30 dias</small></span></div>
+          <ul class="itens">
+            <li>Todas as ofertas, na hora em que aparecem</li>
+            <li>As imperdíveis, exclusivas para membros</li>
+            <li>Erros tarifários e promoções relâmpago</li>
+            <li>Resgates em milhas com passo a passo para emitir</li>
+            <li>Promoções de compra e transferência de milhas</li>
+            <li>Nacionais e internacionais, saindo de todo o Brasil</li>
+          </ul>
+          <a class="btn btn-ouro" data-tg="bot" href="https://t.me/ClubeDasPassagensBot?start=premium">Assinar com Pix</a>
+          <p class="nota">Pix pelo nosso bot no Telegram, sem renovação automática: avisamos 3 dias antes de vencer. Desistiu em até 7 dias do primeiro pagamento? Devolvemos o valor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao clara faixa lamina" aria-labelledby="regras">
+    <div class="miolo">
+      <div class="secao-cab revela">
+        <span class="selo">Transparência</span>
+        <h2 id="regras">Como <em>trabalhamos</em></h2>
+      </div>
+      <div class="regras revela revela-2">
+        <div class="regra"><h3>Não vendemos passagens</h3><p>Somos curadoria. A compra é feita direto na companhia ou no site da oferta, pelo link do alerta.</p></div>
+        <div class="regra"><h3>Preço muda a todo minuto</h3><p>Conferimos antes de publicar e mostramos a hora da verificação, mas a tarifa pode acabar antes de você abrir o link.</p></div>
+        <div class="regra"><h3>Crédito às fontes</h3><p>Ofertas vistas em blogs levam o nome e o link do blog. Se ainda não confirmamos o preço, o alerta diz isso.</p></div>
+        <div class="regra"><h3>Seus dados</h3><p>Guardamos só o seu ID do Telegram e a validade da assinatura. Nada de CPF, telefone ou dados do cartão.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao grafite faixa lamina" aria-labelledby="duvidas">
+    <div class="miolo">
+      <div class="secao-cab revela">
+        <span class="selo">Dúvidas</span>
+        <h2 id="duvidas">Perguntas <em>frequentes</em></h2>
+      </div>
+      <div class="faq revela revela-2">
+        <details><summary>Preciso pagar para entrar?</summary><p>Não. O canal grátis é aberto: é só tocar em "Entrar no canal grátis" com o Telegram instalado. O Premium é opcional.</p></details>
+        <details><summary>Como pago o Premium?</summary><p>Pelo nosso bot no Telegram: ele gera um Pix copia e cola de R$ 17,50. Assim que o pagamento cai, você recebe o link do canal Premium. Também aceitamos Telegram Stars.</p></details>
+        <details><summary>Tem fidelidade ou cobrança automática?</summary><p>Não. Pelo Pix cada pagamento vale 30 dias e você decide se renova. Avisamos 3 dias antes de vencer.</p></details>
+        <details><summary>Funciona para a minha cidade?</summary><p>Publicamos ofertas saindo de qualquer aeroporto do Brasil. Cada alerta tem a cidade de origem como hashtag (#GRU, #REC, #POA), então você encontra as da sua cidade na busca do próprio Telegram.</p></details>
+        <details><summary>Nunca emiti passagem com milhas. Vocês ajudam?</summary><p>Sim. Cada alerta de milhas traz o passo a passo do programa (Smiles, Azul Fidelidade, LATAM Pass e outros): onde buscar, como achar a data mais barata no calendário, quanto custam as taxas e onde comprar as milhas que faltarem pelo menor preço. No bot, o comando /comoemitir explica tudo do zero.</p></details>
+        <details><summary>De onde vêm as ofertas?</summary><p>Dos principais blogs de promoção do país, de buscadores de preço e das companhias. O diferencial é a conferência: comparamos com o preço normal da rota e só publicamos o que está realmente abaixo.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final faixa lamina" aria-labelledby="titulo-final">
+    <div class="miolo">
+      <img src="marca/avatar-telegram.svg" alt="" width="96" height="96" style="border-radius:50%">
+      <span class="selo">Clube das Passagens</span>
+      <h2 id="titulo-final">A próxima passagem barata <em>já pode estar no ar.</em></h2>
+      <p>Entre grátis e veja as próximas ofertas chegando.</p>
+      <a class="btn btn-bordo" data-tg="canal" href="https://t.me/clubedaspassagens">Entrar no canal grátis</a>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape faixa">
+  <div class="miolo">
+    <img src="marca/logo-horizontal.svg" alt="Clube das Passagens" width="116" height="40"><span>© 2026 · curadoria de ofertas de viagem</span>
+    <nav aria-label="Rodapé">
+      <a href="termos.html">Termos de uso</a>
+      <a href="privacidade.html">Privacidade</a>
+      <a data-tg="bot" href="https://t.me/ClubeDasPassagensBot?start=suporte">Contato</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="fixa">
+  <a class="btn btn-ouro" data-tg="canal" href="https://t.me/clubedaspassagens">Entrar no canal grátis</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  // Decisão do dono (25/11): o movimento faz parte da marca e fica SEMPRE ligado. Muita gente tem "efeitos de
+  // animação" desligados no Windows sem saber, e o site parecia estático. Para quem pede menos movimento,
+  // as animações ficam mais curtas e suaves (classe "suave"), mas não somem.
+  var reduz = false;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("suave");
+
+  // 1) Carrossel do hero: transição de slide com profundidade, troca a cada 5 s, pausa no toque/hover.
+  var passes = [].slice.call(document.querySelectorAll(".vitrine .passe"));
+  var pontos = [].slice.call(document.querySelectorAll(".vitrine .ponto"));
+  var atual = 0, timer = null, DUR = 5000;
+  function mostrar(i) {
+    if (i === atual) return;
+    var sai = passes[atual];
+    sai.classList.remove("ativo"); sai.classList.add("saindo");
+    setTimeout(function () { sai.classList.remove("saindo"); }, 1100);
+    passes[i].classList.add("ativo");
+    pontos[atual].classList.remove("ativo"); pontos[i].classList.add("ativo");
+    atual = i;
+  }
+  function proximo() { mostrar((atual + 1) % passes.length); }
+  function iniciar() { if (reduz) return; parar(); timer = setInterval(proximo, DUR); }
+  function parar() { if (timer) clearInterval(timer); timer = null; }
+  pontos.forEach(function (p, i) { p.addEventListener("click", function () { mostrar(i); iniciar(); }); });
+  var vitrine = document.querySelector(".vitrine");
+  if (vitrine) {
+    vitrine.addEventListener("mouseenter", parar); vitrine.addEventListener("mouseleave", iniciar);
+    var x0 = null;
+    vitrine.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; parar(); }, { passive: true });
+    vitrine.addEventListener("touchend", function (e) {
+      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) mostrar((atual + (dx < 0 ? 1 : passes.length - 1)) % passes.length);
+      iniciar();
+    });
+  }
+  document.documentElement.style.setProperty("--dur", DUR / 1000 + "s");
+  iniciar();
+
+  // 2) Carrossel de exemplos: setas rolam um cartão por vez.
+  var trilho = document.querySelector(".bilhetes");
+  document.querySelectorAll(".seta").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var card = trilho.querySelector(".bilhete");
+      trilho.scrollBy({ left: (card ? card.getBoundingClientRect().width + 18 : 320) * +b.dataset.dir, behavior: reduz ? "auto" : "smooth" });
+    });
+  });
+
+  // 3) Revelação em cortina: só para o que está abaixo da primeira tela (o topo já nasce visível).
+  if (!reduz && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js");
+    var io = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("visivel"); io.unobserve(en.target); } });
+    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".revela").forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("visivel"); else io.observe(el);
+    });
+  }
+
+  // 3b) Barra fixa do celular: só aparece quando o botão do hero sai da tela.
+  var fixa = document.querySelector(".fixa");
+  if (fixa) {
+    var checar = function () { fixa.classList.toggle("visivel", (window.scrollY || 0) > window.innerHeight * 0.7); };
+    window.addEventListener("scroll", checar, { passive: true }); checar();
+  }
+
+  // 4) Profundidade ao rolar: camadas com data-prof andam mais devagar que a página (parallax suave).
+  var camadas = [].slice.call(document.querySelectorAll("[data-prof]"));
+  if (!reduz && camadas.length) {
+    var pendente = false;
+    var aplicar = function () {
+      pendente = false;
+      var y = window.scrollY || 0;
+      camadas.forEach(function (c) { c.style.transform = "translate3d(0," + (y * +c.dataset.prof).toFixed(1) + "px,0)"; });
+    };
+    window.addEventListener("scroll", function () { if (!pendente) { pendente = true; requestAnimationFrame(aplicar); } }, { passive: true });
+  }
+
+
+  // ===== movimento premium =====
+  var topoH = function () { var t = document.querySelector(".topo"); return t ? t.getBoundingClientRect().height : 64; };
+
+  // A) rolagem suave (Lenis), se a biblioteca carregou
+  if (!reduz && window.Lenis) {
+    try {
+      var lenis = new window.Lenis({ lerp: 0.085, wheelMultiplier: 1, smoothWheel: true });
+      var rafLenis = function (t) { lenis.raf(t); requestAnimationFrame(rafLenis); };
+      requestAnimationFrame(rafLenis);
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          var alvo = document.querySelector(a.getAttribute("href"));
+          if (alvo) { e.preventDefault(); lenis.scrollTo(alvo, { offset: -topoH(), duration: 1.4 }); }
+        });
+      });
+    } catch (e) { /* segue com a rolagem nativa */ }
+  }
+
+  // B) lâminas: seções presas que a próxima cobre; a de trás encolhe e escurece
+  var laminas = [].slice.call(document.querySelectorAll(".hero, .lamina"));
+  function ajustarTopos() {
+    var th = topoH(), vh = window.innerHeight;
+    laminas.forEach(function (l) {
+      // seção mais alta que a tela: rola inteira e só depois fica presa (pelo pé), para nada ficar escondido
+      l.style.top = Math.min(th, vh - l.offsetHeight) + "px";
+    });
+  }
+  var pendenteL = false;
+  function efeitoLaminas() {
+    pendenteL = false;
+    var vh = window.innerHeight, th = topoH();
+    for (var i = 0; i < laminas.length - 1; i++) {
+      var prox = laminas[i + 1].getBoundingClientRect().top;
+      var p = Math.min(1, Math.max(0, 1 - (prox - th) / (vh - th)));
+      var m = laminas[i].querySelector(":scope > .miolo");
+      if (!m) continue;
+      if (p <= 0) { m.style.transform = ""; m.style.filter = ""; continue; }
+      m.style.transform = "scale(" + (1 - 0.07 * p).toFixed(4) + ") translateY(" + (-24 * p).toFixed(1) + "px)";
+      m.style.filter = "brightness(" + (1 - 0.45 * p).toFixed(3) + ")";
+    }
+  }
+  if (!reduz) {
+    ajustarTopos();
+    window.addEventListener("resize", ajustarTopos);
+    window.addEventListener("load", ajustarTopos);
+    window.addEventListener("scroll", function () { if (!pendenteL) { pendenteL = true; requestAnimationFrame(efeitoLaminas); } }, { passive: true });
+  }
+
+  // C) títulos palavra a palavra (preserva o <em> dourado)
+  function quebrar(el) {
+    var i = 0;
+    (function andar(no) {
+      [].slice.call(no.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var partes = n.textContent.split(/(\s+)/), frag = document.createDocumentFragment();
+          partes.forEach(function (p) {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            var w = document.createElement("span"); w.className = "palavra";
+            var inner = document.createElement("span"); inner.textContent = p; inner.style.setProperty("--i", i++);
+            w.appendChild(inner); frag.appendChild(w);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) { andar(n); }
+      });
+    })(el);
+  }
+  if (!reduz && document.documentElement.classList.contains("js")) {
+    document.querySelectorAll(".secao-cab h2, .final h2").forEach(function (h) {
+      quebrar(h);
+      var alvo = h.closest(".revela");
+      if (!alvo) { h.classList.add("revela"); alvo = h; }
+      if (alvo.classList.contains("visivel")) h.querySelectorAll(".palavra").forEach(function (p) { p.classList.add("ja"); });
+    });
+    var io2 = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("visivel"); io2.unobserve(en.target); } });
+    }, { threshold: 0.2 });
+    document.querySelectorAll(".final h2.revela").forEach(function (h) { io2.observe(h); });
+  }
+
+  // D) botões: onda no toque + ímã no mouse
+  var mouseFino = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  document.querySelectorAll(".btn, .seta, .ponto").forEach(function (b) {
+    b.addEventListener("pointerdown", function (e) {
+      if (reduz) return;
+      var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height);
+      var o = document.createElement("span"); o.className = "onda";
+      o.style.width = o.style.height = d + "px";
+      o.style.left = (e.clientX - r.left - d / 2) + "px"; o.style.top = (e.clientY - r.top - d / 2) + "px";
+      if (getComputedStyle(b).position === "static") b.style.position = "relative";
+      b.style.overflow = "hidden"; b.appendChild(o);
+      setTimeout(function () { o.remove(); }, 800);
+    });
+    if (mouseFino && !reduz && b.classList.contains("btn")) {
+      b.classList.add("ima");
+      b.addEventListener("pointermove", function (e) {
+        var r = b.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        b.style.transform = "translate(" + (dx * 0.16).toFixed(1) + "px," + (dy * 0.28).toFixed(1) + "px)";
+      });
+      b.addEventListener("pointerleave", function () { b.style.transform = ""; });
+    }
+  });
+
+  // E) cartões com inclinação 3D e brilho que segue o mouse
+  if (mouseFino && !reduz) {
+    document.querySelectorAll(".bilhete, .plano, .vitrine-trilho, .passo").forEach(function (c) {
+      c.classList.add("inclina", "brilho-mouse");
+      c.addEventListener("pointermove", function (e) {
+        var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.style.setProperty("--ry", ((x - 0.5) * 9).toFixed(2) + "deg");
+        c.style.setProperty("--rx", ((0.5 - y) * 7).toFixed(2) + "deg");
+        c.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); c.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      });
+      c.addEventListener("pointerleave", function () { c.style.setProperty("--rx", "0deg"); c.style.setProperty("--ry", "0deg"); });
+    });
+  }
+
+  // F) exemplos: arrastar para o lado com o mouse (no celular já é o gesto nativo)
+  if (trilho && mouseFino) {
+    var arr = null;
+    trilho.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse") return;
+      arr = { x: e.clientX, s: trilho.scrollLeft, moveu: false }; trilho.setPointerCapture(e.pointerId);
+    });
+    trilho.addEventListener("pointermove", function (e) {
+      if (!arr) return; var dx = e.clientX - arr.x;
+      if (Math.abs(dx) > 4) { arr.moveu = true; trilho.classList.add("arrastando"); }
+      trilho.scrollLeft = arr.s - dx;
+    });
+    var soltar = function () {
+      if (!arr) return; trilho.classList.remove("arrastando");
+      var card = trilho.querySelector(".bilhete"), w = card ? card.getBoundingClientRect().width + 18 : 320;
+      trilho.scrollTo({ left: Math.round(trilho.scrollLeft / w) * w, behavior: "smooth" }); arr = null;
+    };
+    trilho.addEventListener("pointerup", soltar); trilho.addEventListener("pointercancel", soltar);
+  }
+
+  // 5) Campanha do Google Ads (utm_campaign/gclid) vai para o /start do bot, para medir conversão.
+  try {
+    var q = new URLSearchParams(location.search);
+    var camp = (q.get("utm_campaign") || (q.get("gclid") ? "gads" : "")).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+    if (camp) document.querySelectorAll('a[data-tg="bot"]').forEach(function (a) {
+      var u = new URL(a.href); u.searchParams.set("start", (u.searchParams.get("start") || "lp") + "_" + camp); a.href = u.toString();
+    });
+  } catch (e) { /* a página funciona igual sem rastreio */ }
+})();
+</script>
+</body>
+</html>
