@@ -107,12 +107,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @keyframes entra { from { transform: translateY(16px); opacity: .25; } to { transform: none; opacity: 1; } }
 
 /* carrossel de cartões de embarque */
-.vitrine { position: relative; min-width: 0; perspective: 1400px; }
-.vitrine-trilho { position: relative; display: grid; }
-.passe { grid-area: 1 / 1; background: linear-gradient(160deg, var(--grafite-claro), var(--grafite)); border: 1px solid var(--fio); border-radius: 22px; overflow: hidden; box-shadow: 0 50px 90px -45px rgba(0,0,0,.85);
-  transition: opacity .9s var(--curva), transform 1.1s var(--curva), filter .9s; opacity: 0; transform: translateX(14%) rotateY(-14deg) scale(.94); filter: blur(4px); pointer-events: none; }
-.passe.ativo { opacity: 1; transform: none; filter: none; pointer-events: auto; }
-.passe.saindo { opacity: 0; transform: translateX(-14%) rotateY(14deg) scale(.94); filter: blur(4px); }
+.vitrine { position: relative; min-width: 0; overflow: hidden; padding-block: 24px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.vitrine-trilho { display: flex; gap: 18px; width: max-content; animation: desliza 55s linear infinite; will-change: transform; }
+.vitrine:hover .vitrine-trilho { animation-play-state: paused; }
+.passe { flex: 0 0 min(340px, 78vw); background: linear-gradient(160deg, var(--grafite-claro), var(--grafite)); border: 1px solid var(--fio); border-radius: 22px; overflow: hidden; box-shadow: 0 40px 80px -45px rgba(0,0,0,.85); }
+.vitrine-legenda { margin-top: 4px; font-size: .74rem; color: var(--texto-suave); text-align: right; }
 .passe-cab { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 22px; border-bottom: 1px dashed var(--fio); }
 .passe-cab .tipo { font: 700 .68rem/1 var(--f-texto); letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); }
 .passe-cab .nota { font: 600 .74rem/1 var(--f-texto); color: var(--texto-suave); }
@@ -273,8 +273,9 @@ html.lenis, html.lenis body { height: auto; }
 
 
 /* quem pede menos movimento: tudo continua, só mais curto e suave */
-.suave .revela, .suave .passe, .suave .palavra > span { transition-duration: .6s !important; }
+.suave .revela, .suave .palavra > span { transition-duration: .6s !important; }
 .suave .letreiro-trilho { animation-duration: 140s; }
+.suave .vitrine-trilho { animation-duration: 90s; }
 </style>
 </head>
 <body>
@@ -321,7 +322,7 @@ html.lenis, html.lenis body { height: auto; }
 
       <div class="vitrine" aria-roledescription="carrossel" aria-label="Ofertas reais encontradas">
         <div class="vitrine-trilho">
-          <article class="passe ativo" aria-label="Oferta 1 de 4">
+          <article class="passe" aria-label="Oferta 1 de 4">
             <div class="passe-cab"><span class="tipo">Passagem · imperdível</span><span class="nota">Nota 81/100</span></div>
             <div class="passe-rota">
               <div class="iata">GRU<small>São Paulo</small></div>
@@ -374,15 +375,7 @@ html.lenis, html.lenis body { height: auto; }
             <div class="passe-pe"><span class="ok">Verificado 25/11 · 06:47</span><span class="cod">CP·004</span></div>
           </article>
         </div>
-        <div class="vitrine-controle">
-          <div class="pontos" role="tablist" aria-label="Escolher oferta">
-            <button class="ponto ativo" role="tab" aria-label="Oferta 1"><i></i></button>
-            <button class="ponto" role="tab" aria-label="Oferta 2"><i></i></button>
-            <button class="ponto" role="tab" aria-label="Oferta 3"><i></i></button>
-            <button class="ponto" role="tab" aria-label="Oferta 4"><i></i></button>
-          </div>
-          <small>Ofertas reais · novembro de 2026</small>
-        </div>
+        <p class="vitrine-legenda">Ofertas reais · novembro de 2026 · passe o mouse para pausar</p>
       </div>
     </div>
   </section>
@@ -564,36 +557,13 @@ html.lenis, html.lenis body { height: auto; }
   var reduz = false;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("suave");
 
-  // 1) Carrossel do hero: transição de slide com profundidade, troca a cada 5 s, pausa no toque/hover.
-  var passes = [].slice.call(document.querySelectorAll(".vitrine .passe"));
-  var pontos = [].slice.call(document.querySelectorAll(".vitrine .ponto"));
-  var atual = 0, timer = null, DUR = 5000;
-  function mostrar(i) {
-    if (i === atual) return;
-    var sai = passes[atual];
-    sai.classList.remove("ativo"); sai.classList.add("saindo");
-    setTimeout(function () { sai.classList.remove("saindo"); }, 1100);
-    passes[i].classList.add("ativo");
-    pontos[atual].classList.remove("ativo"); pontos[i].classList.add("ativo");
-    atual = i;
-  }
-  function proximo() { mostrar((atual + 1) % passes.length); }
-  function iniciar() { if (reduz) return; parar(); timer = setInterval(proximo, DUR); }
-  function parar() { if (timer) clearInterval(timer); timer = null; }
-  pontos.forEach(function (p, i) { p.addEventListener("click", function () { mostrar(i); iniciar(); }); });
-  var vitrine = document.querySelector(".vitrine");
-  if (vitrine) {
-    vitrine.addEventListener("mouseenter", parar); vitrine.addEventListener("mouseleave", iniciar);
-    var x0 = null;
-    vitrine.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; parar(); }, { passive: true });
-    vitrine.addEventListener("touchend", function (e) {
-      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
-      if (Math.abs(dx) > 40) mostrar((atual + (dx < 0 ? 1 : passes.length - 1)) % passes.length);
-      iniciar();
+  // 1) Cartões do hero passando sem parar (como o letreiro das cidades): duplica o conjunto para o laço não ter emenda.
+  var trilhoHero = document.querySelector(".vitrine-trilho");
+  if (trilhoHero) {
+    [].slice.call(trilhoHero.children).forEach(function (c) {
+      var copia = c.cloneNode(true); copia.setAttribute("aria-hidden", "true"); trilhoHero.appendChild(copia);
     });
   }
-  document.documentElement.style.setProperty("--dur", DUR / 1000 + "s");
-  iniciar();
 
   // 2) Carrossel de exemplos: setas rolam um cartão por vez.
   var trilho = document.querySelector(".bilhetes");
@@ -717,7 +687,7 @@ html.lenis, html.lenis body { height: auto; }
 
   // D) botões: onda no toque + ímã no mouse
   var mouseFino = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  document.querySelectorAll(".btn, .seta, .ponto").forEach(function (b) {
+  document.querySelectorAll(".btn, .seta").forEach(function (b) {
     b.addEventListener("pointerdown", function (e) {
       if (reduz) return;
       var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height);
@@ -741,7 +711,7 @@ html.lenis, html.lenis body { height: auto; }
 
   // E) cartões com inclinação 3D e brilho que segue o mouse
   if (mouseFino && !reduz) {
-    document.querySelectorAll(".bilhete, .plano, .vitrine-trilho, .passo").forEach(function (c) {
+    document.querySelectorAll(".bilhete, .plano, .passe, .passo").forEach(function (c) {
       c.classList.add("inclina", "brilho-mouse");
       c.addEventListener("pointermove", function (e) {
         var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
